@@ -57,6 +57,13 @@ void init_scene(Scene* scene)
     scene->material.shininess = 10.0f;
 	
 }
+void init_lightdata(Ldata* ldata)
+{
+	ldata->r = 0.0f;
+	ldata->g = 0.0f;
+	ldata->b = 0.0f;
+	ldata->f = 10.0f;
+}
 
 void changeLdata(Ldata* ldata,float intensity)
 {
@@ -145,6 +152,7 @@ void set_material(const Material* material)
 void draw_scene(const Scene* scene,Ldata* ldata)
 {
     set_material(&(scene->material));
+	init_lightdata(&ldata);
 	set_lighting(&ldata);
 	
 	
@@ -198,18 +206,18 @@ void draw_scene(const Scene* scene,Ldata* ldata)
 	/*Up*/
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.25, 1.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.5, 1.0); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.5, 2.0/3.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.25, 2.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.25, 1.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.5, 1.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.5, 2.0/3); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.25, 2.0/3); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
 
     glEnd();
 	
 	/*Down*/
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.25, 1.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.5, 1.0/3.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.25, 1.0/3); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.5, 1.0/3); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
 	glTexCoord2f(0.5, 0.0); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
 	glTexCoord2f(0.25, 0.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
 
@@ -218,45 +226,48 @@ void draw_scene(const Scene* scene,Ldata* ldata)
 	/*Back*/
 	glBegin(GL_QUADS);
 
-	/*glTexCoord2f(0.25, 2.0/3.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.5, 2.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE,SKYBOXSIZE);
-	glTexCoord2f(0.5, 1.0/3.0); glVertex3f(-SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.25, 1.0/3.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);*/
-	
-	glTexCoord2f(0.0, 2.0/3.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.25, 2.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE,SKYBOXSIZE);
-	glTexCoord2f(0.25, 1.0/3.0); glVertex3f(-SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.0, 1.0/3.0); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.0, 2.0/3); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.25, 2.0/3); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE,SKYBOXSIZE);
+	glTexCoord2f(0.25, 1.0/3); glVertex3f(-SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.0, 1.0/3); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
 
     glEnd();
 	
 	/*Front*/
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.5, 2.0/3.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.75, 2.0/3.0); glVertex3f(SKYBOXSIZE, -SKYBOXSIZE,SKYBOXSIZE);
-	glTexCoord2f(0.75, 1.0/3.0); glVertex3f(SKYBOXSIZE, -SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.5, 1.0/3.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.5, 2.0/3); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.75, 2.0/3); glVertex3f(SKYBOXSIZE,SKYBOXSIZE,SKYBOXSIZE);
+	glTexCoord2f(0.75, 1.0/3); glVertex3f(SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.5, 1.0/3); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
 
     glEnd();
 	
 	/*Left*/
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.25, 2.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(0.5, 2.0/3.0); glVertex3f(SKYBOXSIZE,SKYBOXSIZE,SKYBOXSIZE);
-	glTexCoord2f(0.5, 1.0/3.0); glVertex3f(SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.25, 1.0/3.0); glVertex3f(-SKYBOXSIZE,SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.25, 2.0/3); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(0.5, 2.0/3); glVertex3f(SKYBOXSIZE,-SKYBOXSIZE,SKYBOXSIZE);
+	glTexCoord2f(0.5, 1.0/3); glVertex3f(SKYBOXSIZE, -SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.25, 1.0/3); glVertex3f(-SKYBOXSIZE,-SKYBOXSIZE, -SKYBOXSIZE);
 
     glEnd();
 	
 	/*Right*/
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.75, 2.0/3.0); glVertex3f(SKYBOXSIZE, -SKYBOXSIZE, SKYBOXSIZE);
-	glTexCoord2f(1.0, 2.0/3.0); glVertex3f(-SKYBOXSIZE, -SKYBOXSIZE,SKYBOXSIZE);
-	glTexCoord2f(1.0, 1.0/3.0); glVertex3f(-SKYBOXSIZE, -SKYBOXSIZE, -SKYBOXSIZE);
-	glTexCoord2f(0.75, 1.0/3.0); glVertex3f(SKYBOXSIZE, -SKYBOXSIZE, -SKYBOXSIZE);
-	
+	glTexCoord2f(0.75, 2.0/3); glVertex3f(-SKYBOXSIZE, SKYBOXSIZE, SKYBOXSIZE);
+	glTexCoord2f(1.0, 2.0/3); glVertex3f(SKYBOXSIZE, SKYBOXSIZE,SKYBOXSIZE);
+	glTexCoord2f(1.0, 1.0/3); glVertex3f(SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
+	glTexCoord2f(0.75, 1.0/3); glVertex3f(-SKYBOXSIZE, SKYBOXSIZE, -SKYBOXSIZE);
+
     glEnd();
+}
+
+
+
+void draw_skybox(const Scene* scene)
+{
+	
+	
 }
