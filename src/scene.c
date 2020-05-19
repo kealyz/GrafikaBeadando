@@ -59,10 +59,11 @@ void init_scene(Scene* scene)
 }
 void init_lightdata(Ldata* ldata)
 {
-	ldata->r = 0.0f;
-	ldata->g = 0.0f;
-	ldata->b = 0.0f;
-	ldata->f = 10.0f;
+	ldata->r = 0.0;
+	ldata->g = 0.0;
+	ldata->b = 0.0;
+	ldata->f = 10.0;
+	
 }
 
 void changeLdata(Ldata* ldata,float intensity)
@@ -95,6 +96,7 @@ void changeLdata(Ldata* ldata,float intensity)
 		glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse_light);
 		glLightfv(GL_LIGHT1, GL_SPECULAR, specular_light);
 	}
+	printf("\nR: %f\nG: %f\nB: %f",ldata->r,ldata->g,ldata->b);
 }
 
 void changeLightrotation(Ldata* ldata,float h)
@@ -152,7 +154,6 @@ void set_material(const Material* material)
 void draw_scene(const Scene* scene,Ldata* ldata)
 {
     set_material(&(scene->material));
-	init_lightdata(&ldata);
 	set_lighting(&ldata);
 	
 	

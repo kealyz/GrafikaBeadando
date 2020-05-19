@@ -38,6 +38,7 @@ int main(int argc, char* argv[])
     init_opengl();
 	set_textures(&scene);
 	set_callbacks();
+	init_lightdata(&ldata);
     init_scene(&scene);
     init_camera(&camera);
 
